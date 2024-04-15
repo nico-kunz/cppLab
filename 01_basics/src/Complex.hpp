@@ -16,6 +16,7 @@ class Complex {
   double abs() const;
   double angle() const;
 
+  Complex operator~() const;
   friend std::ostream& operator<<(std::ostream&, Complex);
 
  private:

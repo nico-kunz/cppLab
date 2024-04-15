@@ -25,8 +25,13 @@ double Complex::imag() const {
   return c_imaginary;
 }
 
+Complex Complex::operator~() const {
+  return {c_real, c_imaginary * -1};
+}
+
 std::ostream& operator<<(std::ostream& out, Complex rhs) {
-  out << rhs.c_real << "+" << rhs.c_imaginary << "i";
+  std::string sign = rhs.c_imaginary > 0 ? "+" : "";
+  out << rhs.c_real << sign << rhs.c_imaginary << "i";
   return out;
 }
 
