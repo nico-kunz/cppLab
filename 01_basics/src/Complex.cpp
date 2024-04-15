@@ -3,6 +3,7 @@
 //
 
 #include "Complex.hpp"
+#include<iostream>
 /**
  * Creates Complex number with default values 0 + 0i
  */
@@ -22,6 +23,11 @@ double Complex::real() const {
 
 double Complex::imag() const {
   return c_imaginary;
+}
+
+std::ostream& operator<<(std::ostream& out, Complex rhs) {
+  out << rhs.c_real << "+" << rhs.c_imaginary << "i";
+  return out;
 }
 
 
