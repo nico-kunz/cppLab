@@ -62,7 +62,7 @@ Complex Complex::operator/(Complex rhs) const {
 }
 
 std::ostream& operator<<(std::ostream& out, Complex rhs) {
-  std::string sign = rhs.c_imaginary > 0 ? "+" : "";
+  std::string sign = rhs.c_imaginary >= 0 ? "+" : "";
   out << rhs.c_real << sign << rhs.c_imaginary << "i";
   return out;
 }

@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Complex.hpp"
 int main() {
+  Complex x = Complex();
+  std::cout << x << std::endl;
   Complex c = ~Complex(1,2);
 
   std::cout << c << std::endl;
