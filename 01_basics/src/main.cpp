@@ -28,6 +28,9 @@ int main() {
 
   std::cout << c.angle() << std::endl;
 
+  std::cout << Complex::from_euler(d.abs(), d.angle()) << std::endl;
+
+  std::cout << x.angle() << std::endl;
   std::cout << Complex::from_euler(3, 0.34906585) << std::endl;
 
 }

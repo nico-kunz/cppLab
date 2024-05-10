@@ -5,7 +5,7 @@
 #ifndef INC_01_BASICS_SRC_COMPLEX_HPP_
 #define INC_01_BASICS_SRC_COMPLEX_HPP_
 
-#include <string>
+#include<iostream>
 class Complex {
  public:
   Complex();
@@ -29,7 +29,5 @@ class Complex {
   double c_imaginary;
 
 };
-
-std::ostream& operator<<(std::ostream& out, Complex rhs);
 
 #endif //INC_01_BASICS_SRC_COMPLEX_HPP_
