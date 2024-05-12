@@ -15,6 +15,7 @@ typedef std::vector<std::vector<Colony*>> Universe;
 class GameOfLife {
 private:
     int getAliveNeighbors(int x, int y) const;
+    bool isAtEdge(int x, int y) const;
 
 protected:
     Universe colonies;

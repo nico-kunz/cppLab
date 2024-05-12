@@ -54,6 +54,45 @@ GameOfLife::GameOfLife(const GameOfLife &other) : X_SIZE(other.X_SIZE), Y_SIZE(o
     }
 }
 
+void GameOfLife::iterate() {
+    for (int y = 0; y < Y_SIZE; ++y) {
+        for (int x = 0; x < X_SIZE; ++x) {
+            colonies.at(y).at(x)->calculateNextState(getAliveNeighbors(x, y));
+        }
+    }
+}
+
+int GameOfLife::getAliveNeighbors(int x, int y) const {
+    // return zero if colony is at edge
+    if (isAtEdge(x, y))
+        return 0;
+
+    int aliveNeighbors = 0;
+
+    for (int current_y = y - 1; current_y <= y + 1; ++current_y) {
+        for (int current_x = x - 1; current_x <= x + 1; ++current_x) {
+            // skip center colony whose neighbors we calculate
+            if (current_x == x && current_y == y) {
+                continue;
+            }
+
+            if (colonies.at(y).at(x)->getState()) {
+                ++aliveNeighbors;
+            }
+        }
+    }
+
+    return aliveNeighbors;
+}
+
+inline bool GameOfLife::isAtEdge(int x, int y) const {
+    if (x == 0 || y == 0 || x == X_SIZE || y == Y_SIZE)
+        return true;
+
+    return false;
+}
+
+
 int GameOfLife::getX_SIZE() const {
     return X_SIZE;
 }
