@@ -54,6 +54,14 @@ GameOfLife::GameOfLife(const GameOfLife &other) : X_SIZE(other.X_SIZE), Y_SIZE(o
     }
 }
 
+int GameOfLife::getX_SIZE() const {
+    return X_SIZE;
+}
 
+int GameOfLife::getY_SIZE() const {
+    return Y_SIZE;
+}
 
-
+const Universe &GameOfLife::getColonies() const {
+    return colonies;
+}
