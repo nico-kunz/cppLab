@@ -26,7 +26,6 @@ GameOfLife::GameOfLife(Universe &colonies) : X_SIZE(colonies.size()), Y_SIZE(col
     for (int y = 0; y < colonies.size(); ++y) {
         for (int x = 0; x < colonies[0].size(); ++x) {
             this->colonies.at(y).at(x) = colonies.at(y).at(x);
-            delete colonies[y][x];
         }
     }
     colonies.clear();
@@ -41,7 +40,7 @@ GameOfLife::~GameOfLife() {
         }
     }
 
-    colonies.clear();
+    //colonies.clear();
 }
 
 GameOfLife::GameOfLife(const GameOfLife &other) : X_SIZE(other.X_SIZE), Y_SIZE(other.Y_SIZE) {
@@ -49,7 +48,7 @@ GameOfLife::GameOfLife(const GameOfLife &other) : X_SIZE(other.X_SIZE), Y_SIZE(o
 
     for (int y = 0; y < Y_SIZE; ++y) {
         for (int x = 0; x < X_SIZE; ++x) {
-            colonies.at(y).at(x) = new Colony(other.colonies.at(y).at(x));
+            colonies.at(y).at(x) = new Colony(other.colonies.at(y).at(x)->getState());
         }
     }
 }
@@ -60,12 +59,18 @@ void GameOfLife::iterate() {
             colonies.at(y).at(x)->calculateNextState(getAliveNeighbors(x, y));
         }
     }
+
+    for (int y = 0; y < Y_SIZE; ++y) {
+        for (int x = 0; x < X_SIZE; ++x) {
+            colonies.at(y).at(x)->evolve();
+        }
+    }
 }
 
 int GameOfLife::getAliveNeighbors(int x, int y) const {
     // return zero if colony is at edge
-    if (isAtEdge(x, y))
-        return 0;
+    /*if (isAtEdge(x, y))
+        return 0;*/
 
     int aliveNeighbors = 0;
 
@@ -76,7 +81,10 @@ int GameOfLife::getAliveNeighbors(int x, int y) const {
                 continue;
             }
 
-            if (colonies.at(y).at(x)->getState()) {
+            if(current_x < 0 || current_y < 0 || current_x >= X_SIZE || current_y >= Y_SIZE)
+                continue;
+
+            if (colonies.at(current_y).at(current_x)->getState()) {
                 ++aliveNeighbors;
             }
         }
@@ -92,7 +100,6 @@ inline bool GameOfLife::isAtEdge(int x, int y) const {
     return false;
 }
 
-
 int GameOfLife::getX_SIZE() const {
     return X_SIZE;
 }
@@ -104,3 +111,14 @@ int GameOfLife::getY_SIZE() const {
 const Universe &GameOfLife::getColonies() const {
     return colonies;
 }
+void GameOfLife::run() {
+
+}
+void GameOfLife::writeToFile(std::string filename) {
+
+}
+GameOfLife GameOfLife::readFromFile(std::string filename) {
+    return GameOfLife(0, 0, 0);
+}
+
+

@@ -15,13 +15,16 @@ void Colony::evolve() {
 }
 
 void Colony::calculateNextState(int alive_neighbors) {
-    // if less than 2 or more than 3 neighbors, die because of over-/underpopulation
-    if (state && (alive_neighbors < 2 || alive_neighbors > 3)) {
-        next_state = false;
-    }
 
-    // Colony will be revived if it has 3 neighbors because of Expansion
-    if (!state && alive_neighbors == 3) {
-        next_state = true;
+    if(state) {
+        if (alive_neighbors < 2 || alive_neighbors > 3)
+            next_state = false;
+        else
+            next_state = true;
+    } else {
+        if(alive_neighbors == 3)
+            next_state = true;
+        else
+            next_state = false;
     }
 }
