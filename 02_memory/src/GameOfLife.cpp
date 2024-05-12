@@ -1,5 +1,7 @@
 #include <ctime>
 #include <cstdlib>
+#include <iostream>
+#include <fstream>
 
 #include "GameOfLife.hpp"
 
@@ -81,7 +83,7 @@ int GameOfLife::getAliveNeighbors(int x, int y) const {
                 continue;
             }
 
-            if(current_x < 0 || current_y < 0 || current_x >= X_SIZE || current_y >= Y_SIZE)
+            if (current_x < 0 || current_y < 0 || current_x >= X_SIZE || current_y >= Y_SIZE)
                 continue;
 
             if (colonies.at(current_y).at(current_x)->getState()) {
@@ -111,14 +113,47 @@ int GameOfLife::getY_SIZE() const {
 const Universe &GameOfLife::getColonies() const {
     return colonies;
 }
+
 void GameOfLife::run() {
 
 }
-void GameOfLife::writeToFile(std::string filename) {
 
+void GameOfLife::writeToFile(std::string filename) {
+    std::ofstream file;
+    file.open(filename);
+    file << X_SIZE << " " << Y_SIZE << "\n";
+    for (int y = 0; y < Y_SIZE; ++y) {
+        for (int x = 0; x < X_SIZE; ++x) {
+            file << (colonies.at(y).at(x)->getState() ? 1 : 0);
+        }
+        file << "\n";
+    }
+
+    file.close();
 }
+
 GameOfLife GameOfLife::readFromFile(std::string filename) {
-    return GameOfLife(0, 0, 0);
+    std::ifstream file;
+    std::string line;
+    file.open(filename);
+    std::getline(file, line, ' ');
+    int X = std::stoi(line);
+    std::getline(file, line, '\n');
+    int Y = std::stoi(line);
+    Universe universe = Universe();
+    universe.reserve(Y);
+
+    int i = 0;
+    while (std::getline(file, line)) {
+        universe.push_back(std::vector<Colony*>());
+        universe.at(i).reserve(X);
+        for (char &c: line) {
+            universe.at(i).push_back(new Colony(c == '1'));
+        }
+        i++;
+    }
+
+    return {universe};
 }
 
 
