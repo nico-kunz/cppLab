@@ -70,10 +70,6 @@ void GameOfLife::iterate() {
 }
 
 int GameOfLife::getAliveNeighbors(int x, int y) const {
-    // return zero if colony is at edge
-    /*if (isAtEdge(x, y))
-        return 0;*/
-
     int aliveNeighbors = 0;
 
     for (int current_y = y - 1; current_y <= y + 1; ++current_y) {
@@ -83,8 +79,9 @@ int GameOfLife::getAliveNeighbors(int x, int y) const {
                 continue;
             }
 
-            if (current_x < 0 || current_y < 0 || current_x >= X_SIZE || current_y >= Y_SIZE)
+            if (current_x < 0 || current_y < 0 || current_x >= X_SIZE || current_y >= Y_SIZE) {
                 continue;
+            }
 
             if (colonies.at(current_y).at(current_x)->getState()) {
                 ++aliveNeighbors;
@@ -119,6 +116,7 @@ void GameOfLife::run() {
 }
 
 void GameOfLife::writeToFile(std::string filename) {
+    // throw error
     std::ofstream file;
     file.open(filename);
     file << X_SIZE << " " << Y_SIZE << "\n";
@@ -145,13 +143,15 @@ GameOfLife GameOfLife::readFromFile(std::string filename) {
 
     int i = 0;
     while (std::getline(file, line)) {
-        universe.push_back(std::vector<Colony*>());
+        universe.push_back(std::vector<Colony *>());
         universe.at(i).reserve(X);
-        for (char &c: line) {
+        for (char &c : line) {
             universe.at(i).push_back(new Colony(c == '1'));
         }
         i++;
     }
+
+    file.close();
 
     return {universe};
 }
