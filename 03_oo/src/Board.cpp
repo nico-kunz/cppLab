@@ -80,7 +80,33 @@ std::tuple<int, int> Board::getColRow(std::string &s) {
     return {std::toupper(s[0]) - 65, s[1] - '0'};
 }
 
-void Board::place_fleet_randomly(const std::vector<Ship>& fleet) {
+void Board::place_fleet_randomly(const std::vector<Ship> &fleet) {
+    srand(rand() + time(nullptr));
+
+    for (const auto &ship : fleet) {
+        bool couldBePlaced = false;
+        while (!couldBePlaced) {
+            int col = rand() % m_dim;
+            int row = rand() % m_dim;
+            int direction = rand() % 2;
+
+            int colEnd = col;
+            int rowEnd = row;
+
+            if (direction == 1) {
+                colEnd += ship.length - 1;
+            } else {
+                rowEnd += ship.length - 1;
+            }
+
+            if (colEnd >= m_dim || rowEnd >= m_dim) {
+                continue;
+            }
+
+            couldBePlaced = placeShip(col, row, colEnd, rowEnd);
+        }
+    }
+
 }
 
 std::ostream& operator<<(std::ostream& os, const Board& board) {
