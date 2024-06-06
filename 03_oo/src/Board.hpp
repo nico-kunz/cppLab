@@ -56,6 +56,7 @@ class Board : public ITargetBoard {
     }
 
     void set_ship_manually(char col, unsigned char row) {}
+    friend std::ostream &operator<<(std::ostream &os, const Board &board);
 
   private:
     size_t m_dim;
@@ -80,4 +81,4 @@ class Board : public ITargetBoard {
     bool placeShip(int col, int row, int colEnd, int rowEnd);
 };
 
-std::ostream& operator<<(std::ostream& os, const Board& board);
+std::ostream &operator<<(std::ostream &os, const Board &board);
