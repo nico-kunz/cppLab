@@ -50,12 +50,16 @@ class Board : public ITargetBoard {
     }
 
     Field at(char col, unsigned char row) const {
-        return Field::WATER;
+        int x = std::toupper(col) - 65;
+        int y = row - '0';
+        return m_board[x][y];
     }
 
     void set_ship_manually(char col, unsigned char row) {}
 
   private:
+    size_t m_dim;
+    std::vector<std::vector<Field>> m_board;
 };
 
 std::ostream& operator<<(std::ostream& os, const Board& board);
