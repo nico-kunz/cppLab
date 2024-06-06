@@ -35,6 +35,11 @@ add_executable(tournament
         src/Tournament.cpp
 )
 
+add_executable(main
+    $<TARGET_OBJECTS:common>
+        src/Main.cpp
+)
+
 # Fetch Catch2
 Include(FetchContent)
 FetchContent_Declare(
