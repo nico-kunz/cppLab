@@ -27,7 +27,14 @@ class ITargetBoard {
 
 class Board : public ITargetBoard {
   public:
-    Board(size_t dim) {}
+    Board(size_t dim) {
+        if (dim < 2 || dim > 10) {
+            throw std::invalid_argument("Dimension must be in [2, 10]");
+        }
+        m_dim = dim;
+        m_board = std::vector(dim, std::vector(dim, Field::WATER));
+        srand(time(nullptr));
+    }
 
     void place_fleet_randomly(const std::vector<Ship>& fleet);
     void place_fleet_manually(const std::vector<Ship>& fleet);
