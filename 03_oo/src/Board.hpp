@@ -58,7 +58,11 @@ class Board : public ITargetBoard {
         return m_board[x][row];
     }
 
-    void set_ship_manually(char col, unsigned char row) {}
+    void set_ship_manually(char col, unsigned char row) {
+        int x = std::toupper(col) - 65;
+
+        m_board[x][col] = Field::SHIP;
+    }
     friend std::ostream &operator<<(std::ostream &os, const Board &board);
 
   private:
