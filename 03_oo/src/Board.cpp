@@ -109,20 +109,25 @@ void Board::place_fleet_randomly(const std::vector<Ship> &fleet) {
 }
 
 std::ostream &operator<<(std::ostream &os, const Board &board) {
-    for (int i = 0; i < board.m_dim; i++) {
-        std::cout << std::string(4 * board.m_dim, '-') << std::endl;
-        for (int j = 0; j < board.m_dim; j++) {
+    for (int i = 0; i < board.m_dim; ++i) {
+        std::cout << std::string(4 * board.m_dim + 1, '-') << std::endl;
+        for (int j = 0; j < board.m_dim; ++j) {
             os << "|";
             switch (board.m_board[i][j]) {
                 case Field::SHIP:os << " S ";
                     break;
                 case Field::WATER:os << "   ";
                     break;
-                case Field::HIT:os << " H ";
+                case Field::HIT:os << " X ";
                     break;
             }
         }
         os << "| " << i << std::endl;
+    }
+    std::cout << std::string(4 * board.m_dim + 1, '-') << std::endl;
+
+    for (char c = 'A'; c < 'A' + board.m_dim; c++) {
+        os << "  " << c << " ";
     }
     return os;
 }
