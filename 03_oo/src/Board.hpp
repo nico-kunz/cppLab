@@ -42,11 +42,33 @@ class Board : public ITargetBoard {
     size_t dim() const override { return m_dim; }
     std::vector<std::vector<Field>> m_board;
 
+    /**
+     * Fires a shot at the given coords. Sets the field on the board to hit if a ship was hit.
+     * @param col
+     * @param row
+     * @return True if a ship was hit, false if not.
+     */
     virtual bool fire(char col, unsigned char row) override {
-        return false;
+        int x = std::toupper(col) - 65;
+
+        bool isHit = m_board[x][row] == Field::SHIP;
+
+        if (isHit) {
+            m_board[x][row] = Field::HIT;
+        }
+
+        return isHit;
     }
 
     virtual bool fleet_destroyed() const override {
+        for (int i = 0; i < m_dim; ++i) {
+            for (int j = 0; j < m_dim; ++j) {
+                if (m_board[i][j] == Field::SHIP) {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 
@@ -75,14 +97,6 @@ class Board : public ITargetBoard {
 
   private:
     size_t m_dim;
-    std::vector<std::vector<Field>> m_board;
-
-    /**
-     * Get tuple containing column and row number from the given string
-     * @param s String containing a letter followed by a number < 10
-     * @return row number and column number (zero-based)
-     */
-    static std::tuple<int, int> getColRow(std::string &s);
 
     /**
      * Tries placing the ship at the given coordinates, returns true if the ship could be placed.
