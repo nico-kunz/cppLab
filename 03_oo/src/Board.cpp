@@ -5,15 +5,13 @@
 
 void Board::place_fleet_manually(const std::vector<Ship> &fleet) {
     int shipsPlaced = 0;
-    std::string a("D2");
-    std::cout << std::get<0>(getColRow(a)) << std::endl;
+
     while (shipsPlaced < fleet.size()) {
         std::string input;
         std::cout << shipsPlaced + 1 << ". " << "Input where to place the ship " << fleet[shipsPlaced].type
                   << " length " << fleet[shipsPlaced].length << std::endl;
         std::cin >> input;
         auto [col, row] = getColRow(input);
-        std::cout << col << row << std::endl;
 
         if (col < 0 || col >= m_dim || row < 0 || row >= m_dim) {
             std::cout << "Invalid input! Make sure the value is Between A and " << char(m_dim + 64) << ", and 1 and "
@@ -24,7 +22,6 @@ void Board::place_fleet_manually(const std::vector<Ship> &fleet) {
         std::cout << "Input where the ship should end" << std::endl;
         std::cin >> input;
         auto [colEnd, rowEnd] = getColRow(input);
-        std::cout << colEnd << rowEnd << std::endl;
         if (colEnd != col && rowEnd != row) {
             std::cout << "Ships can't be placed diagonally!" << std::endl;
             continue;
@@ -57,7 +54,6 @@ bool Board::placeShip(int col, int row, int colEnd, int rowEnd) {
         }
 
         m_board[col][row] = Field::SHIP;
-        std::cout << "SET " << col << row << std::endl;
         col += directionX;
     }
 
@@ -68,7 +64,6 @@ bool Board::placeShip(int col, int row, int colEnd, int rowEnd) {
         }
 
         m_board[col][row] = Field::SHIP;
-        std::cout << "SET " << col << row << std::endl;
         row += directionY;
     }
 
@@ -110,10 +105,10 @@ void Board::place_fleet_randomly(const std::vector<Ship> &fleet) {
 
 std::ostream &operator<<(std::ostream &os, const Board &board) {
     for (int i = 0; i < board.m_dim; ++i) {
-        std::cout << std::string(4 * board.m_dim + 1, '-') << std::endl;
+        os << std::string(4 * board.m_dim + 1, '-') << std::endl;
         for (int j = 0; j < board.m_dim; ++j) {
             os << "|";
-            switch (board.m_board[i][j]) {
+            switch (board.m_board[j][i]) {
                 case Field::SHIP:os << " S ";
                     break;
                 case Field::WATER:os << "   ";
@@ -124,7 +119,7 @@ std::ostream &operator<<(std::ostream &os, const Board &board) {
         }
         os << "| " << i << std::endl;
     }
-    std::cout << std::string(4 * board.m_dim + 1, '-') << std::endl;
+    os << std::string(4 * board.m_dim + 1, '-') << std::endl;
 
     for (char c = 'A'; c < 'A' + board.m_dim; c++) {
         os << "  " << c << " ";
