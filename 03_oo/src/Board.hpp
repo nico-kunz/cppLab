@@ -39,7 +39,8 @@ class Board : public ITargetBoard {
     void place_fleet_randomly(const std::vector<Ship> &fleet);
     void place_fleet_manually(const std::vector<Ship> &fleet);
 
-    size_t dim() const override { return 0; }
+    size_t dim() const override { return m_dim; }
+    std::vector<std::vector<Field>> m_board;
 
     virtual bool fire(char col, unsigned char row) override {
         return false;
@@ -61,8 +62,15 @@ class Board : public ITargetBoard {
     void set_ship_manually(char col, unsigned char row) {
         int x = std::toupper(col) - 65;
 
-        m_board[x][col] = Field::SHIP;
+        m_board[x][row] = Field::SHIP;
     }
+
+    /**
+    * Get tuple containing column and row number from the given string
+    * @param s String containing a letter followed by a number < 10
+    * @return row number and column number (zero-based)
+    */
+    static std::tuple<int, int> getColRow(std::string &s);
     friend std::ostream &operator<<(std::ostream &os, const Board &board);
 
   private:
