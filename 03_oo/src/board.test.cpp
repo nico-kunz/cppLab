@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <numeric>
+#include <iostream>
 
 #include "util.test.hpp"
 #include "Board.hpp"
@@ -73,6 +74,7 @@ TEST_CASE("board random placement") {
             }
         }
     }
+    std::cout << board << std::endl;
 
     const size_t expected_ship_field_count = std::accumulate(fleet.cbegin(), fleet.cend(), 0, [](auto acc, const auto& ship) { return acc + ship.length; });
     REQUIRE(ship_field_count == expected_ship_field_count);
@@ -81,7 +83,7 @@ TEST_CASE("board random placement") {
 TEST_CASE("board operator<<") {
 
     Board board(4);
-
+    std::stringstream s{};
     board.set_ship_manually('A', 0);
     board.set_ship_manually('A', 1);
     board.set_ship_manually('B', 2);
@@ -92,7 +94,7 @@ TEST_CASE("board operator<<") {
     board.fire('A', 2);
     board.fire('C', 2);
 
-    std::stringstream s{};
+
     s << board;
 
     const std::string line0{ "-----------------" };

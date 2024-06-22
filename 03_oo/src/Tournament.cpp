@@ -10,7 +10,7 @@
 
 int main() {
 
-    constexpr size_t ROUNDS = 1000;
+    constexpr size_t ROUNDS = 10000;
     constexpr size_t DIM = 10;
 
     const std::vector<Ship> fleet = {

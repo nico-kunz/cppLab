@@ -8,9 +8,11 @@ void Player::print_result_map() {
         for (int j = 0; j < m_attack_board.size(); ++j) {
             std::cout << "|";
             switch (m_attack_board[j][i]) {
-                case AttackField::MISS: std::cout << " ~ ";
+                case AttackField::MISS:
+                    std::cout << " ~ ";
                     break;
-                case AttackField::HIT: std::cout << " X ";
+                case AttackField::HIT:
+                    std::cout << " X ";
                     break;
                 case AttackField::NONE:
                     std::cout << "   ";

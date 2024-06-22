@@ -75,7 +75,7 @@ class Board : public ITargetBoard {
     Field at(char col, unsigned char row) const {
         int x = std::toupper(col) - 65;
 
-        if (x < 0 || x >= m_dim || row < 0 || row >= m_dim) {
+        if (x < 0 || x >= m_dim || row >= m_dim) {
             throw std::out_of_range("Index is out of range");
         }
         return m_board[x][row];

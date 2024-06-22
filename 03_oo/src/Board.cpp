@@ -100,7 +100,6 @@ void Board::place_fleet_randomly(const std::vector<Ship> &fleet) {
             couldBePlaced = placeShip(col, row, colEnd, rowEnd);
         }
     }
-
 }
 
 std::ostream &operator<<(std::ostream &os, const Board &board) {
@@ -109,11 +108,14 @@ std::ostream &operator<<(std::ostream &os, const Board &board) {
         for (int j = 0; j < board.m_dim; ++j) {
             os << "|";
             switch (board.m_board[j][i]) {
-                case Field::SHIP:os << " S ";
+                case Field::SHIP:
+                    os << " S ";
                     break;
-                case Field::WATER:os << "   ";
+                case Field::WATER:
+                    os << "   ";
                     break;
-                case Field::HIT:os << " X ";
+                case Field::HIT:
+                    os << " X ";
                     break;
             }
         }

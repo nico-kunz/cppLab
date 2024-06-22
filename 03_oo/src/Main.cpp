@@ -6,20 +6,20 @@
 #include <iostream>
 
 int main() {
-    Board board{10};
+    Board board{5};
     const std::vector<Ship> fleet = {
-        Ship(5, "dreadnought"),
-        Ship(4, "cruiser"),
-        Ship(4, "cruiser"),
+//        Ship(5, "dreadnought"),
+//        Ship(4, "cruiser"),
+//        Ship(4, "cruiser"),
+//        Ship(3, "destroyer"),
+//        Ship(3, "destroyer"),
         Ship(3, "destroyer"),
-        Ship(3, "destroyer"),
-        Ship(3, "destroyer"),
         Ship(2, "submarine"),
-        Ship(2, "submarine"),
-        Ship(2, "submarine"),
-        Ship(2, "submarine"),
-        Ship(2, "submarine"),
+//        Ship(2, "submarine"),
+//        Ship(2, "submarine"),
+//        Ship(2, "submarine"),
+//        Ship(2, "submarine"),
     };
-    board.place_fleet_manually(fleet);
-    //std::cout << board << std::endl;
+    board.place_fleet_randomly(fleet);
+    std::cout << board << std::endl;
 }
