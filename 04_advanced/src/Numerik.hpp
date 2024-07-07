@@ -2,20 +2,11 @@
 
 #include <cstddef>
 
-double trapz(double (*fx)(double), double a, double b, size_t n) {
-    double interval_len = (b-a)/n;
-    double sum = 0.0;
-
-    for(int i = 1; i < n; ++i) {
-        sum += fx(a + i*interval_len);
-    }
-
-    return interval_len * ((fx(b) + fx(a))/2 + sum);
-}
+double trapz(double (*fx)(double), double a, double b, size_t n);
 
 template <typename T>
 T fxT(T x) {
-    return x * x * x + 4*(x * x) - T{7}*x + T{12};
+    return x * x * x + T{4}*(x * x) - T{7}*x + T{12};
 }
 
 template <typename T>
@@ -27,5 +18,5 @@ T trapzT(T (*fx)(T), T a, T b, size_t n) {
         sum += fx(a + i*interval_len);
     }
 
-    return interval_len * ((fx(b) + fx(a))/2 + sum);
+    return interval_len * (0.5*(fx(b) + fx(a)) + sum);
 }

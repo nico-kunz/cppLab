@@ -11,13 +11,14 @@ std::map<int, std::string> buildIdStringMap(const std::vector<std::string> &inpu
 
     for (const auto &str : input) {
         size_t pos;
+
+        // throw if string starts with whitespace
+        if (!str.empty() && str.at(0) == ' ') {
+            throw std::runtime_error("String cannot start with whitespace");
+        }
+
         try {
             const int id{std::stoi(str, &pos)};
-
-            // throw if string starts with whitespace
-            if (!str.empty() && str.at(0) == ' ') {
-                throw std::runtime_error("String cannot start with whitespace");
-            }
 
             // throw if key already exists
             if (result.find(id) != result.end()) {
@@ -25,7 +26,7 @@ std::map<int, std::string> buildIdStringMap(const std::vector<std::string> &inpu
             }
 
             result[id] = str.substr(pos);
-        } catch (std::invalid_argument &e) {
+        } catch (std::exception &e) {
             // pass through exceptions as runtime exception
             throw std::runtime_error(e.what());
         }
@@ -57,12 +58,8 @@ bool isPalindrome(const std::string &input) {
 size_t countPalindromes(const std::string &input) {
     int count = 0;
 
-    if(input.length() < 2) {
-        return 0;
-    }
-
     for(int len = 2; len <= input.length(); ++len) {
-        for(int i = 0; i <= input.length() - len; i++) {
+        for(int i = 0; i <= input.length() - len; ++i) {
             auto substr = input.substr(i, len);
             if(isPalindrome(substr)) {
                 ++count;
@@ -78,32 +75,24 @@ StringSplitter::StringSplitter(char sep, std::vector<std::string> &target) : m_s
 }
 
 StringSplitter::~StringSplitter() {
-    pushBackNonEmpty();
+    flush();
 }
 
 void StringSplitter::operator()(char c) {
     if(c == m_sep) {
-        pushBackNonEmpty();
+        flush();
         return;
     }
 
     m_str += c;
 }
 
-/**
- * Pushes back currently stored string on output iff currently stored string is not empty.
- * Also resets currently stored string.
- */
-void StringSplitter::pushBackNonEmpty() {
+void StringSplitter::flush() {
     if(m_str.empty()) {
         return;
     }
 
     m_output.push_back(m_str);
     m_str = "";
-}
-
-void StringSplitter::flush() {
-    pushBackNonEmpty();
 }
 
