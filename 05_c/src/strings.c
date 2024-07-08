@@ -79,5 +79,15 @@ int IPStringtoInt(const char* ip, uint32_t* const ip_int) {
 }
 
 void IPInttoString(uint32_t ip, char* const ip_string) {
-    ip_string[0] = '\0';
+    int counter = 0;
+    for(int i = 0; i < 4; ++i) {
+        // Get int string from leftmost byte, shift by 24 since we go from left to right
+        counter += sprintf(ip_string + counter, "%d", (ip >> (24 - 8*i)) & 0xFF);
+        ip_string[counter] = '.';
+        ++counter;
+    }
+
+    // remove last dot
+    ip_string[counter-1] = '\0';
+    printf("%s", ip_string);
 }
